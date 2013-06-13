@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Na Parede{% endblock %}
+
+
+{% block content %}
+<h3>Minhas pinturas</h3>
+{% for painting in paintings %}
+	<ul>
+		<li>{{ painting.title }}</li>
+		<li>{{ painting.description }}</li>
+	</ul>
+{% endfor %}
+{% endblock %}

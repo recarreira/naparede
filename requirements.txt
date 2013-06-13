@@ -1,0 +1,4 @@
+Django==1.5.1
+South==0.8.1
+argparse==1.2.1
+django-pytest==0.2.0

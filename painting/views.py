@@ -3,7 +3,7 @@ from models import Painting
 
 
 def home(request):
-    #import pdb; pdb.set_trace()
+    paintings = Painting.objects.all()
     return render_to_response('index.html', {
-        "paintings": Painting.objects.all(),
+        "paintings": paintings,
         })

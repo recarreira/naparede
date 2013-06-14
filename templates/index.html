@@ -8,6 +8,9 @@
 	<ul>
 		<li>{{ painting.title }}</li>
 		<li>{{ painting.description }}</li>
+	{% for source in painting.image_painting.all %}
+		<li><img src="{{ source.image }}"></li>
+	{% endfor %}
 	</ul>
 {% endfor %}
 {% endblock %}

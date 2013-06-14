@@ -11,23 +11,40 @@ class Migration(SchemaMigration):
         # Adding model 'Painting'
         db.create_table(u'painting_painting', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('Description', self.gf('django.db.models.fields.TextField')()),
+            ('title', self.gf('django.db.models.fields.CharField')(default='title', max_length=200)),
+            ('description', self.gf('django.db.models.fields.TextField')(default='description')),
         ))
         db.send_create_signal(u'painting', ['Painting'])
+
+        # Adding model 'Image'
+        db.create_table(u'painting_image', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('painting', self.gf('django.db.models.fields.related.ForeignKey')(related_name='image_painting', to=orm['painting.Painting'])),
+            ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
+        ))
+        db.send_create_signal(u'painting', ['Image'])
 
 
     def backwards(self, orm):
         # Deleting model 'Painting'
         db.delete_table(u'painting_painting')
 
+        # Deleting model 'Image'
+        db.delete_table(u'painting_image')
+
 
     models = {
-        u'painting.painting': {
-            'Description': ('django.db.models.fields.TextField', [], {}),
-            'Meta': {'object_name': 'Painting'},
+        u'painting.image': {
+            'Meta': {'object_name': 'Image'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '200'})
+            'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'painting': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'image_painting'", 'to': u"orm['painting.Painting']"})
+        },
+        u'painting.painting': {
+            'Meta': {'object_name': 'Painting'},
+            'description': ('django.db.models.fields.TextField', [], {'default': "'description'"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'default': "'title'", 'max_length': '200'})
         }
     }
 

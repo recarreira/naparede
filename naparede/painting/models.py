@@ -1,8 +1,18 @@
 from django.db import models
+from author.models import Author
+
+class Galery(models.Model):
+    name = models.CharField('Name', max_length=200, null=False)
+    
+    def __unicode__(self):
+        return self.name
 
 class Painting(models.Model):
-    title           = models.CharField('Title', max_length=200, null=False, default="title")
-    description     = models.TextField('Description', null=False, default="description")
+    author = models.ForeignKey(Author, related_name='painting_author')
+    title = models.CharField('Title', max_length=200, null=False, default="title")
+    description = models.TextField('Description', null=False, default="description")
+    for_sale = models.BooleanField('For sale')
+    galery = models.ManyToManyField(Galery)
 
     def __unicode__(self):
         return self.title

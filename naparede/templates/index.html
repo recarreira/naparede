@@ -5,12 +5,11 @@
 {% block content %}
 <h3>Minhas pinturas</h3>
 {% for painting in paintings %}
-	<ul>
-		<li>{{ painting.title }}</li>
-		<li>{{ painting.description }}</li>
-	{% for source in painting.image_painting.all %}
-		<li><img src="{{ source.image }}"></li>
-	{% endfor %}
-	</ul>
+	<div>
+		{{ painting.title }}
+		{% with source=painting.image_painting.all %}
+			<img src="{{ source.image }}">
+		{% endwith %}
+	</div>
 {% endfor %}
 {% endblock %}

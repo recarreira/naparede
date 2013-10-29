@@ -135,6 +135,7 @@ INSTALLED_APPS = (
 
     # My Apps
     'painting',
+    'author',
 )
 
 # A sample logging configuration. The only tangible logging

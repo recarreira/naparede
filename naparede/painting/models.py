@@ -9,9 +9,14 @@ class Galery(models.Model):
 
 class Painting(models.Model):
     author = models.ForeignKey(Author, related_name='painting_author')
-    title = models.CharField('Title', max_length=200, null=False, default="title")
-    description = models.TextField('Description', null=False, default="description")
+    title = models.CharField('Title', max_length=200)
+    description = models.TextField('Description')
+    height = models.IntegerField('Height(cm)', null=True, blank=True)
+    width = models.IntegerField('Width(cm)', null=True, blank=True)
+    technique = models.CharField('Painting technique', max_length=200, null=True, blank=True)
     for_sale = models.BooleanField('For sale')
+    price = models.DecimalField('Price', max_digits=8, decimal_places=2, null=True, blank=True)
+    discount = models.DecimalField('Discount', max_digits=8, decimal_places=2, null=True, blank=True)
     galery = models.ManyToManyField(Galery)
 
     def __unicode__(self):

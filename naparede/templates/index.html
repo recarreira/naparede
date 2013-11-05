@@ -1,15 +1,60 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
+{% load galery_tags %}
+
 {% block title %}Na Parede{% endblock %}
 
+{% block extra_head %}
+<link href="{% static 'css/home.css' %}" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'js/modernizr.transforms3d.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.chaos.js' %}"></script>
+
+<script type="text/javascript">
+
+	$(function() {
+		$("#paintings").chaos({
+	    	padding: 5
+	  	})
+	  	$("#paintings").chaos().organize();
+
+		$(".menu .galery").click(function(e) {
+		    e.preventDefault();
+		    var cssClass = "." + $(this).attr("id");
+		    $(".atom").addClass("hide");
+
+		    $("#paintings").chaos().organize({
+		      selector: cssClass,
+		      beforeAnimation: function() {
+		        
+		        $(cssClass).removeClass("hide");
+		      }
+		    });
+		});
+	});
+</script>
+
+{% endblock %}
+
+<h3>Minhas pinturas</h3>
 
 {% block content %}
-<h3>Minhas pinturas</h3>
-{% for painting in paintings %}
-	<div>
-		{{ painting.title }}
-		{% with source=painting.image_painting.all %}
-			<img src="{{ source.image }}">
-		{% endwith %}
-	</div>
+<ul class="menu">
+{% for galery in galeries %}
+	<li id="{{ galery | tag_to_css }}" class="galery"><a href="#">{{ galery }}</a></li>
 {% endfor %}
+</ul>
+
+<div id="paintings">
+	{% for painting in paintings %}
+		{% with tags=painting.galery.all %}
+			<div class="{{ tags | tags_to_css }} atom">
+		{% endwith %}
+			{% with source=painting.image_painting.all %}
+				<img src="{{ source.0.image }}">
+			{% endwith %}
+				{{ painting.title }}
+			</div>
+	{% endfor %}
+</div>
 {% endblock %}

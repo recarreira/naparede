@@ -1,0 +1,10 @@
+#paintings div, #paintings img {
+	width: 200px;
+}
+#paintings div {
+	display: inline-block;
+}
+
+.atom.hide {
+    opacity: 0;
+  }
